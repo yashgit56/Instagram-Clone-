@@ -5,42 +5,42 @@ import { CgProfile } from 'react-icons/cg'
 export const menus = [
     {
         title:"Home",
-        icon: <AiOutlineHome className='text-2xl mr-5' /> ,
-        activeIcon: <AiFillHome className='text-2xl mr-5' />
+        icon: <AiOutlineHome className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <AiFillHome className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Search",
-        icon: <AiOutlineSearch className='text-2xl mr-5' /> ,
-        activeIcon: <AiOutlineSearch className='text-2xl mr-5' />
+        icon: <AiOutlineSearch className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <AiOutlineSearch className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Explore",
-        icon: <AiOutlineCompass className='text-2xl mr-5' /> ,
-        activeIcon: <AiFillCompass className='text-2xl mr-5' />
+        icon: <AiOutlineCompass className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <AiFillCompass className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Reels",
-        icon: <RiVideoLine className='text-2xl mr-5' /> ,
-        activeIcon: <RiVideoFill className='text-2xl mr-5' />
+        icon: <RiVideoLine className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <RiVideoFill className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Message",
-        icon: <AiOutlineMessage className='text-2xl mr-5' /> ,
-        activeIcon: <AiFillMessage className='text-2xl mr-5' />
+        icon: <AiOutlineMessage className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <AiFillMessage className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Notification",
-        icon: <AiOutlineHeart className='text-2xl mr-5' /> ,
-        activeIcon: <AiFillHeart className='text-2xl mr-5' />
+        icon: <AiOutlineHeart className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <AiFillHeart className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Create",
-        icon: <AiOutlinePlusCircle className='text-2xl mr-5' /> ,
-        activeIcon: <AiFillPlusCircle className='text-2xl mr-5' />
+        icon: <AiOutlinePlusCircle className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <AiFillPlusCircle className='text-2xl mr-5 inline-block' />
     },
     {
         title:"Profile",
-        icon: <CgProfile className='text-2xl mr-5' /> ,
-        activeIcon: <CgProfile className='text-2xl mr-5' />
+        icon: <CgProfile className='text-2xl mr-5 inline-block' /> ,
+        activeIcon: <CgProfile className='text-2xl mr-5 inline-block' />
     }
 ]

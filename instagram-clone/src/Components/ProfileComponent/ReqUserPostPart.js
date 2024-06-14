@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineTable , AiOutlineUser } from 'react-icons/ai'
 import { RiVideoAddLine } from 'react-icons/ri'
 import { BiBookmark } from 'react-icons/bi'
 import ReqUserPostCard from './ReqUserPostCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { reqUserPostHandler } from '../../Redux/Post/Action'
 
-const ReqUserPostPart = () => {
+const ReqUserPostPart = ({user}) => {
 
-    const [ activeTab , setActiveTab ] = useState() ;
+    const [ activeTab , setActiveTab ] = useState("Post") ;
+    const dispatch = useDispatch() ;
+    const token = localStorage.getItem("token") ;
+    const { post } = useSelector( store => store ) ;
 
     const tabs = [
         {
@@ -29,7 +34,17 @@ const ReqUserPostPart = () => {
             icon: <AiOutlineUser />,
             activeTab: ""
         }
-    ]
+    ];
+
+    useEffect(()=>{
+        if(user){
+            const data={
+                jwt:token,
+                userId: user.id 
+            };
+            dispatch(reqUserPostHandler(data));
+        }
+    },[user,post.createdPost,dispatch,token]) ;
 
   return (
     <div>
@@ -43,9 +58,18 @@ const ReqUserPostPart = () => {
         </div>
         <div>
             <div className='flex flex-wrap'>
-                { [1,1,1,1,1].map((item) => (
-                    <ReqUserPostCard />
-                )) }
+                {
+                    activeTab === "Post" &&
+                        post.usersPost?.map((item)=>(
+                            <ReqUserPostCard post={item} />
+                        ))
+                }
+                {
+                    activeTab === "Saved" &&
+                        user.savedPost?.map((item)=>(
+                            <ReqUserPostCard post={item} />
+                        ))
+                }
             </div>
         </div>
     </div>

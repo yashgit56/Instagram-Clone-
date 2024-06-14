@@ -5,7 +5,7 @@
     justify-content: center;
     color: #999;
     padding: 2rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     border-radius: 5px;
 }
@@ -15,7 +15,7 @@
 }
 
 .custom-file-upload{
-    padding: .5rem  .1rem;
+    padding: .5rem  1rem;
     font-weight: 600;
     color: white;
     background-color: #3897f0;
@@ -23,7 +23,7 @@
     cursor: pointer;
 }
 
-.custom-file-upload {
+.custom-file-upload:hover {
     background-color: #2684f0;
     border-color: #2684f0;
 }

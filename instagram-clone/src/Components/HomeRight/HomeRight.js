@@ -1,7 +1,11 @@
 import React from 'react'
 import SuggestionCard from './SuggestionCard'
+import { useSelector } from 'react-redux'
 
-const HomeRight = () => {
+const HomeRight = ({user}) => {
+
+  const { post } = useSelector( store => store) ;
+  
   return (
     <div className=''>
       <div>
@@ -9,11 +13,15 @@ const HomeRight = () => {
           <div className='flex items-center justify-between'>
             <div className='flex items-center'>
               <div>
-                <img className='h-12 w-12 rounded-full' src='kavya.png' alt=''></img>
+                <img 
+                  className='h-12 w-12 rounded-full' 
+                  src={user?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
+                  alt=''
+                />
               </div>
               <div className='ml-3'>
-                <p>username</p>
-                <p className='opacity-70'>fullname</p>
+                <p> { user?.username } </p>
+                <p className='opacity-70'> { user?.name } </p>
               </div>
             </div>
             <div>
@@ -23,7 +31,9 @@ const HomeRight = () => {
 
 
           <div className='space-y-5 mt-10'>
-            {[1,1,1,1,1,1].map((e)=> <SuggestionCard /> )}
+            {user?.suggestionUsers?.map((item)=> 
+                <SuggestionCard user={item} /> 
+            )}
           </div>
         </div>
       </div>

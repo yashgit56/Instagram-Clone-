@@ -4,20 +4,27 @@ import { FaComment } from 'react-icons/fa'
 
 import './ReqUserPostCard.css'
 
-const ReqUserPostCard = () => {
+const ReqUserPostCard = ({post}) => {
+
+    
   return (
     <div className='p-2'>
         <div className='post w-60 h-60 '>
-            <img className='cursor-pointer' src='kavya.png' alt=''></img>
+            <img 
+                className='cursor-pointer'  
+                src={post.image} 
+                alt=''
+            />
+
             <div className='overlay'>
                 <div className='overlay-text flex justify-between'>
                     <div>
                         <AiFillHeart></AiFillHeart>
-                        <span> 10 </span>
+                        <span> { post?.likedByUsers.length } </span>
                     </div>
                     <div>
                         <FaComment></FaComment>
-                        <span> 30 </span>
+                        <span> { post.comments.length } </span>
                     </div>
                 </div>
             </div>

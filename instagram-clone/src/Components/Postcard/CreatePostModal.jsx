@@ -10,6 +10,9 @@ import { FaPhotoVideo } from 'react-icons/fa'
 import { GrEmoji } from 'react-icons/gr'
 import { GoLocation } from 'react-icons/go'
 import './CreatePostModal.css' 
+import { useDispatch } from 'react-redux'
+import { createPostHandler } from '../../Redux/Post/Action'
+import { uploadToCloudinary } from '../../Config/UploadToCloudinary'
 
 const CreatePostModal = ({
     onClose,
@@ -19,6 +22,10 @@ const CreatePostModal = ({
     const [ isDragOver, setIsDragOver ] = useState(false) ;
     const [ file, setFile ] = useState() ;
     const [ caption, setCaption ] = useState("") ;
+    const [ imageUrl, setImageUrl] = useState("") ;
+    const [ location, setLocation ] = useState("");
+    const token = localStorage.getItem("token") ;
+    const dispatch = useDispatch() ;
 
     const handleDrop = (event) => {
         event.preventDefault() ;
@@ -26,7 +33,6 @@ const CreatePostModal = ({
         if(droppedFile.type.startsWith("image/") || droppedFile.type.startsWith("video/")){
             setFile(droppedFile) ;
         }
-
     }
 
     const handleDragOver = (event) => {
@@ -36,13 +42,16 @@ const CreatePostModal = ({
         console.log("file: " , file);
     }
 
-    const handleDragEnd = () => {
+    const handleDragLeave = () => {
         setIsDragOver(false) ;
     }
 
-    const handleOnChange = (event) => {
+    const handleOnChange = async (event) => {
         const file = event.target.files[0] ;
         if(file && ( file.type.startsWith("image/") || file.type.startsWith("video/"))){
+            const imgUrl = await uploadToCloudinary(file) ;
+            setImageUrl(imgUrl) ;
+            console.log(imageUrl) ;
             setFile(file);
         }
         else{
@@ -55,15 +64,37 @@ const CreatePostModal = ({
         setCaption(e.target.value) ;
     }
 
+    const handleRemovePhoto = () => {
+        setFile(null) ;
+    }
+
+    const handleSharePost = () => {
+        const data = {
+            jwt: token,
+            data: {
+                caption,
+                location,
+                image:imageUrl
+            },
+        };
+
+        dispatch(createPostHandler(data));
+        onClose()
+    }
+
+
   return (
     <div>
         <Modal size={"4xl"} onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay />
             <ModalContent>
             
-            <div className='flex items-center justify-between px-5 py-1'>
+            <div className='flex items-center justify-between px-10 py-1'>
                 <p> Create New Post </p>
-                <Button className='inline-flex' variant="ghost" size="sm" colorScheme='blue'> Share </Button>
+                <div className='flex items-center justify-center'>
+                    {file && <Button onClick={handleRemovePhoto} variant={"ghost"} size={"sm"} > Remove Post Image </Button> }
+                    <Button variant="ghost" size="sm" colorScheme='blue' onClick={handleSharePost}> Share </Button>
+                </div>
             </div>
 
             <hr/>
@@ -74,19 +105,29 @@ const CreatePostModal = ({
                         {!file && <div
                             onDrop={handleDrop}
                             onDragOver={handleDragOver}
-                            onDragEnd={handleDragEnd}
+                            onDragLeave={handleDragLeave}
                             className='drag-drop h-full' 
                         >
                             <div>
-                                <FaPhotoVideo className='text-3xl ml-20' />
+                                <FaPhotoVideo className='text-3xl ml-24' />
                                 <p> Drag Photos and Videos here </p>
                             </div>
-                            <label htmlFor='file-upload' className='custom-file-upload'> Select From Computer </label>
-                            <input type='file'className='fileInput' id='file-upload' accept='image/*, video/*' onChange={handleOnChange} />
+                            <label 
+                                htmlFor='file-upload' 
+                                className='custom-file-upload'
+                            > Select From Computer </label>
+
+                            <input 
+                                type='file'
+                                className='fileInput' 
+                                id='file-upload' 
+                                accept='image/*, video/*' 
+                                onChange={handleOnChange} 
+                            />
                         </div>
                         }
 
-                        {file && <img src={URL.createObjectURL(file)} alt='' />}
+                        {file && <img className='max-h-full mr-1' src={URL.createObjectURL(file)} alt='' />}
                     </div>
 
                     <div className='w-[1px] border-2 h-full'></div>
@@ -114,6 +155,7 @@ const CreatePostModal = ({
                             <input 
                                 type='text'
                                 placeholder='location...'
+                                onChange={(e)=>setLocation(e.target.value)}
                                 name='location'
                                 className='locationInput'
                             />     
