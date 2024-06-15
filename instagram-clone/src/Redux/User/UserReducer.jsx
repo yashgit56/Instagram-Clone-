@@ -20,7 +20,7 @@ export const UserReducer = ( store = initialValue, {type, payload}) => {
         return { ...store, findByUsername: payload} ;
     }
     else if(type === GET_USERS_BY_USER_IDS){
-        return { ...store, findByUserIds: payload} ;
+        return { ...store, findUserByIds: payload} ;
     }
     else if(type === FOLLOW_USER){
         return { ...store, followUser: payload} ;

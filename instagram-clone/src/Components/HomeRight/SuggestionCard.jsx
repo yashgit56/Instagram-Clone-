@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const SuggestionCard = ({user}) => {
+
   return (
     <div className='flex items-center justify-between'>
         <div className='flex items-center'>
@@ -14,7 +15,9 @@ const SuggestionCard = ({user}) => {
                 <p className='text-sm font-semibold opacity-70'> Follows you </p>
             </div>
         </div>
-        <p className='text-blue-700 text-sm font-semibold'> Follow </p>
+      
+          <p className='text-blue-700 text-sm font-semibold'> Follow </p>
+        
     </div>
   )
 }

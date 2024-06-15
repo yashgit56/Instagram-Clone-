@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { followUserAction, unfollowUserAction } from '../../Redux/User/Action';
 import { MdPersonAdd } from "react-icons/md";
+import { IoIosArrowDown } from "react-icons/io";
+
 
 const UserDetails = ({user, isFollowing, isReqUser, jwtToken}) => {
 
@@ -59,7 +61,8 @@ const UserDetails = ({user, isFollowing, isReqUser, jwtToken}) => {
                         :
                         <>
                             {userFollowed ? 
-                                <Button colorScheme='blue' onClick={handleUnfollow}> Unfollow </Button> :
+                                <Button className='flex items-center justify-between' colorScheme='blue' onClick={handleUnfollow}> Following <IoIosArrowDown />
+ </Button> :
                                 <Button colorScheme='blue' onClick={handleFollow}> Follow </Button> }
                             {userFollowed && <Button> Message </Button>}
                             <MdPersonAdd></MdPersonAdd>    

@@ -22,6 +22,7 @@ const StoryViewer = ({ stories }) => {
   const [ currentStoryIndex, setCurrentStoryIndex ] = useState(0) ;
   const [ activeIndex, setActiveIndex ] = useState(0) ;
 
+  console.log("story in story viewer: ", stories) ;
 
   const handleNextStory = () => {
     if(currentStoryIndex < (stories?.length - 1)){
@@ -35,7 +36,7 @@ const StoryViewer = ({ stories }) => {
   }
 
   useEffect(()=>{
-    const interval = setInterval(() => {handleNextStory()}, 2000) 
+    const interval = setInterval(() => {handleNextStory()}, 3000) 
     return () => clearInterval(interval) ;
   },[currentStoryIndex])
 
@@ -47,7 +48,7 @@ const StoryViewer = ({ stories }) => {
         <StoryImage src={stories?.[currentStoryIndex].image} />
 
         <div className='absolute top-0 flex w-full'>
-          { stories.map((item,index) => 
+          { stories?.length > 0 && stories.map((item,index) => 
             <ProgressBar 
                 key={index} 
                 duration={2000} 

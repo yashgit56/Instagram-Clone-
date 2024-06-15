@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { findUserPostHandler, reqUserPostHandler } from '../Redux/Post/Action'
 import { hasStory } from '../Config/Logics'
 import { useNavigate } from 'react-router-dom'
-import { getSuggestionUsersAction } from '../Redux/User/Action'
+import { findUserByUserIdsAction, getSuggestionUsersAction } from '../Redux/User/Action'
+import { findStoryByUserId } from '../Redux/Story/Action'
 
 
 const HomePage = () => {
@@ -26,13 +27,14 @@ const HomePage = () => {
   console.log("post in home page: ",post) ;
 
   useEffect(() => {
+    const newIds = user?.reqUser?.following.map(followingUser => followingUser.id);
     
-    if (user.reqUser?.following && Array.isArray(user.reqUser.following)) {
-      const newIds = user.reqUser.following.map(followingUser => followingUser.id);
-      setUserIds([user.reqUser.id, ...newIds]);
-    } else {
-      setUserIds([user.reqUser?.id]);
-    } 
+    if(newIds?.length > 0){
+      setUserIds([user?.reqUser?.id, ...newIds]) ;
+    }
+    else{
+      setUserIds([user?.reqUser?.id]) ;
+    }
 
   },[user.reqUser,navigate,token]) ;
 
@@ -41,23 +43,25 @@ const HomePage = () => {
       jwt: token,
       userIds: [userIds].join(",") 
     }
-    dispatch(findUserPostHandler(data));
-    // dispatch(findUserByUserIdsAction(data));
-    dispatch(getSuggestionUsersAction(token));
-  },[userIds, post?.createdPost, post?.deletedPost,navigate,token,dispatch]) ;
+    // dispatch(findUserPostHandler(data));
+    dispatch(findUserByUserIdsAction(data)) ;
+    // dispatch(findStoryByUserId(data)) ;
+    // dispatch(getSuggestionUsersAction(token));
+  },[userIds, post?.createdPost, post?.deletedPost,navigate,token,dispatch, user?.reqUser?.id ]) ;
 
   const storyUsers = hasStory(user.findUserByIds) ;
+  console.log("story users: " , storyUsers) ;
 
   return (
     <div>
       <div className='w-[100%] flex mt-10 justify-center'>
         <div className='w-[44%] px-10'>
           <div className='storyDiv flex space-x-3 justify-start w-full rounded-md border p-4'>
-            {storyUsers.length > 0 && (
-              storyUsers.map((item) => (
-                <StoryCircle user={item} />
+            { storyUsers.length > 0 && (
+              storyUsers.map((item,index) => (
+                <StoryCircle  key={index} user={item} />
               ) 
-            ))}
+            ))} 
           </div>
           <div className='space-y-10 w-full mt-3'>
             {post.usersPost?.length > 0 && post.usersPost?.map((item)=> (
@@ -67,7 +71,7 @@ const HomePage = () => {
         </div>
         <div className='w-[10%]'></div>
         <div className='w-[28%]'>
-          <HomeRight user={user?.reqUser} />
+          <HomeRight user={user} />
         </div>
         
       </div>

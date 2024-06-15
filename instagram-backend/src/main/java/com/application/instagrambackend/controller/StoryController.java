@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stories")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StoryController {
 
     @Autowired
@@ -41,5 +41,12 @@ public class StoryController {
         List<Story> stories = storyService.findStoryByUserId(user.getId()) ;
 
         return new ResponseEntity<List<Story>>(stories, HttpStatus.OK) ;
+    }
+
+    @GetMapping("/f/{userId} ")
+    public ResponseEntity<List<Story>> findAllFollowingUserStoryHandler(@PathVariable Integer userId) throws StoryException, UserException {
+        List<Story> followingUserStories = storyService.findFollowingUserStoryHandler(userId) ;
+
+        return new ResponseEntity<List<Story>>(followingUserStories,HttpStatus.OK) ;
     }
 }

@@ -9,6 +9,8 @@ const StoryPage = () => {
     const dispatch = useDispatch() ;
     const { userId } = useParams() ;
     const { story } = useSelector(store=>store) ;
+
+    console.log("story in Story Page: ", story) ;
     
     useEffect(()=>{
         const data = {
@@ -16,7 +18,7 @@ const StoryPage = () => {
             userId
         };
         dispatch(findStoryByUserId(data));
-    },[userId]) ;
+    },[userId, dispatch, token]) ;
 
   return (
     <div>

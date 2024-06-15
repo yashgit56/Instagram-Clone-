@@ -138,7 +138,7 @@ export const getSuggestionUsersAction = (jwt) => async(dispatch) => {
 
         const users = await res.json() ;
 
-        console.log("suggested users: ",users) ;
+        // console.log("suggested users: ",users) ;
 
         dispatch({type:SUGGESTION_USER, payload:users});
     }

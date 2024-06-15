@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class StoryServiceImplementation implements StoryService {
@@ -47,6 +48,24 @@ public class StoryServiceImplementation implements StoryService {
         User user = userService.findUserById(userId) ;
 
         List<Story> stories = user.getStories();
+
+        return stories ;
+    }
+
+    @Override
+    public List<Story> findFollowingUserStoryHandler(Integer userId) throws StoryException, UserException {
+        User reqUser = userService.findUserById(userId) ;
+
+        List<Story> stories = reqUser.getFollowing().stream()
+                .flatMap(user -> {
+                    try{
+                        User followingUser = userService.findUserById(user.getId()) ;
+                        return followingUser.getStories().stream();
+                    }
+                    catch (UserException e){
+                        return Stream.empty() ;
+                    }
+                }).toList() ;
 
         return stories ;
     }

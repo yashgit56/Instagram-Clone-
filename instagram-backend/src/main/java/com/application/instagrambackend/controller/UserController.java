@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -78,12 +78,13 @@ public class UserController {
         return new ResponseEntity<List<User>>(users,HttpStatus.OK) ;
     }
 
-    @PutMapping("/account/edit")
+    @PutMapping("/accounts/edit")
     public ResponseEntity<User> updateUserHandler(@RequestHeader("Authorization") String token, @RequestBody User user) throws UserException{
         User reqUser = userService.findUserProfile(token) ;
+//        System.out.println("request user: "+ reqUser);
 
         User updatedUser = userService.updateUserDetails(user,reqUser) ;
-        System.out.println("edited user: "+updatedUser) ;
+//        System.out.println("edited user: "+updatedUser) ;
         return new ResponseEntity<User>(updatedUser, HttpStatus.OK) ;
     }
 

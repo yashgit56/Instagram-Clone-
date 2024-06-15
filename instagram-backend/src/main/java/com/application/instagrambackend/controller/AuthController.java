@@ -19,7 +19,7 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
